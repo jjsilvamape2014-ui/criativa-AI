@@ -3,10 +3,14 @@
 import { useEffect } from 'react';
 import Header from '@/components/Header';
 import VideoGenerator from '@/components/VideoGenerator';
+import { clearAuthTokenCookie } from '@/lib/auth-cookie';
 
 export default function VideoPage() {
   useEffect(() => {
-    if (!localStorage.getItem('token')) window.location.href = '/login';
+    if (!localStorage.getItem('token')) {
+      clearAuthTokenCookie();
+      window.location.href = '/login';
+    }
   }, []);
 
   return (

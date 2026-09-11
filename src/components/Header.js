@@ -16,6 +16,7 @@ export default function Header() {
     if (token) {
       api.getProfile().then(setUser).catch(() => {
         localStorage.removeItem('token');
+        clearAuthTokenCookie();
       });
     }
     const handleScroll = () => setScrolled(window.scrollY > 10);
