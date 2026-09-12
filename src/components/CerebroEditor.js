@@ -159,7 +159,7 @@ export default function CerebroEditor() {
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <h3 className="font-semibold text-white flex items-center gap-2">
-            <span className="text-lg">🧠</span> Cerebro Visual
+            <span className="text-lg"></span> Cerebro Visual
             {sessionId && <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 font-medium">Sessao ativa</span>}
           </h3>
           <p className="text-xs text-gray-500 mt-1">Agente de criação por conversa: envie uma foto e peça o que quiser — colocar chapéu, trocar cor, remover pessoa, adicionar texto/logo, juntar imagens ou transformar em vídeo. Também cria peças do zero (flyer, banner, logo...) só digitando o pedido. (1 crédito por ação)</p>

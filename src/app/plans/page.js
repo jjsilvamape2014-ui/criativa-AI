@@ -76,11 +76,11 @@ export default function PlansPage() {
             <p className="text-4xl font-bold text-white mb-1">R$ 0<span className="text-base font-normal text-gray-400"> Limitado</span></p>
             <p className="text-sm text-gray-400 mb-6">Teste tudo sem pagar nada</p>
             <ul className="space-y-3 text-sm text-gray-300 mb-6">
-              <li className="flex items-center gap-2">✅ Créditos grátis de imagem</li>
-              <li className="flex items-center gap-2">✅ Resolução 4K</li>
-              <li className="flex items-center gap-2">✅ Sem watermark</li>
-              <li className="flex items-center gap-2">✅ Texto em português nítido</li>
-              <li className="flex items-center gap-2 text-gray-500">❌ Ao acabar os créditos, assina o Premium</li>
+              <li className="flex items-center gap-2">Créditos grátis de imagem</li>
+              <li className="flex items-center gap-2">Resolução 4K</li>
+              <li className="flex items-center gap-2">Sem watermark</li>
+              <li className="flex items-center gap-2">Texto em português nítido</li>
+              <li className="flex items-center gap-2 text-gray-500">Ao acabar os créditos, assina o Premium</li>
             </ul>
             {user?.plan === 'FREE' ? (
               user?.creditsImages + user?.creditsPurchased > 0 ? (
@@ -105,12 +105,12 @@ export default function PlansPage() {
             <p className="text-4xl font-bold text-primary-400 mb-1">R$ 39,99<span className="text-base font-normal text-gray-400">/mês</span></p>
             <p className="text-sm text-gray-400 mb-6">Crie sem limites, quando quiser</p>
             <ul className="space-y-3 text-sm text-gray-300 mb-6">
-              <li className="flex items-center gap-2">✅ Imagens ilimitadas em 4K</li>
-              <li className="flex items-center gap-2">✅ Todos os estilos de anúncio</li>
-              <li className="flex items-center gap-2">✅ Modelos exclusivos premium</li>
-              <li className="flex items-center gap-2">✅ Upscale 4K automático</li>
-              <li className="flex items-center gap-2">✅ Sem fila — prioridade máxima</li>
-              <li className="flex items-center gap-2">✅ Suporte prioritário</li>
+              <li className="flex items-center gap-2">Imagens ilimitadas em 4K</li>
+              <li className="flex items-center gap-2">Todos os estilos de anúncio</li>
+              <li className="flex items-center gap-2">Modelos exclusivos premium</li>
+              <li className="flex items-center gap-2">Upscale 4K automático</li>
+              <li className="flex items-center gap-2">Sem fila — prioridade máxima</li>
+              <li className="flex items-center gap-2">Suporte prioritário</li>
             </ul>
             {user?.plan === 'PREMIUM' ? (
               <button disabled className="w-full py-3 rounded-xl bg-white/5 text-gray-500 font-semibold cursor-default">

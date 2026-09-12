@@ -6,43 +6,43 @@ import { api } from '@/lib/api';
 const STYLES = [
   {
     id: 'classico',
-    icon: '📄',
+    icon: '',
     title: 'Clássico',
     desc: 'Foto em destaque, nome e número grandes. O que todo mundo reconhece.',
   },
   {
     id: 'moderno',
-    icon: '⚡',
+    icon: '',
     title: 'Moderno 2026',
     desc: 'Número gigante em primeiro plano e layout arrojado.',
   },
   {
     id: 'institucional',
-    icon: '🏛️',
+    icon: '',
     title: 'Institucional',
     desc: 'Camisa oficial de campanha e fundo na cor partidária, visual de assessoria.',
   },
   {
     id: 'tiara',
-    icon: '👑',
+    icon: '',
     title: 'Foto tiara',
     desc: 'Retrato grande no topo com o número em destaque embaixo.',
   },
   {
     id: 'faixa',
-    icon: '🎗️',
+    icon: '',
     title: 'Faixa partidária',
     desc: 'Faixa de cor atravessando o card, tipografia forte e ousada.',
   },
   {
     id: 'cracha',
-    icon: '🪪',
+    icon: '',
     title: 'Crachá',
     desc: 'Foto central com a tag do nome por baixo, estilo "João Carlos Mello".',
   },
   {
     id: 'verso',
-    icon: '🔁',
+    icon: '',
     title: 'Frente e verso',
     desc: 'Gera a frente do santinho e a parte de trás com propostas, voto e coligação.',
   },
@@ -240,7 +240,7 @@ export default function CardDeCandidatoPage() {
         >
           ← Voltar
         </a>
-        <p className="text-[22px] font-bold text-brand-text">🗳️ Card de candidato</p>
+        <p className="text-[22px] font-bold text-brand-text">Card de candidato</p>
         <p className="mt-1 text-[14px] text-brand-sub">
           Monte o santinho do candidato(a) eleições 2026: foto, nome, número e slogan prontos para imprimir e divulgar no WhatsApp.
         </p>
@@ -283,7 +283,7 @@ export default function CardDeCandidatoPage() {
             onClick={() => fileRef.current?.click()}
             className="flex h-24 w-full flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-brand-borderStrong bg-brand-surface text-brand-dim hover:border-brand-accent hover:text-brand-accent transition-colors"
           >
-            <span className="text-xl">📷</span>
+            <span className="text-xl"></span>
             <span className="text-[13px]">Clique para enviar a foto</span>
           </button>
         )}

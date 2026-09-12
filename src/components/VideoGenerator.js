@@ -6,21 +6,21 @@ import { api } from '@/lib/api';
 // Estilos de anúncio em vídeo — o "Afiliado Shopee" é o estilo de apresentação de
 // produto usado pelos afiliados pra vender no marketplace.
 const AD_STYLES = [
-  { key: 'afiliado', label: '🛍️ Afiliado Shopee' },
-  { key: 'promo', label: '⚡ Impulso (mktplace)' },
-  { key: 'brasil', label: '🇧🇷 Energia BR' },
-  { key: 'empresa', label: '🏢 Empresa' },
-  { key: 'logo', label: '🔤 Logo' },
-  { key: 'hero', label: '🎯 Hero shot' },
-  { key: 'orbit', label: '🔄 Rotação 360°' },
-  { key: 'lifestyle', label: '🌇 Lifestyle' },
-  { key: 'elegant', label: '💎 Elegante' },
+  { key: 'afiliado', label: 'Afiliado Shopee' },
+  { key: 'promo', label: 'Impulso (mktplace)' },
+  { key: 'brasil', label: 'Energia BR' },
+  { key: 'empresa', label: 'Empresa' },
+  { key: 'logo', label: 'Logo' },
+  { key: 'hero', label: 'Hero shot' },
+  { key: 'orbit', label: 'Rotação 360°' },
+  { key: 'lifestyle', label: 'Lifestyle' },
+  { key: 'elegant', label: 'Elegante' },
 ];
 
 const MODES = [
-  { key: 'product', icon: '📦', label: 'Anúncio de produto', tip: 'Vídeo vendendo no marketplace' },
-  { key: 'talking', icon: '🎤', label: 'Anúncio falado', tip: 'Apresentadora fala do produto', hot: true },
-  { key: 'animate', icon: '🎞️', label: 'Animar imagem', tip: 'Move a sua imagem' },
+  { key: 'product', icon: '', label: 'Anúncio de produto', tip: 'Vídeo vendendo no marketplace' },
+  { key: 'talking', icon: '', label: 'Anúncio falado', tip: 'Apresentadora fala do produto', hot: true },
+  { key: 'animate', icon: '', label: 'Animar imagem', tip: 'Move a sua imagem' },
 ];
 
 export default function VideoGenerator() {
@@ -216,7 +216,7 @@ export default function VideoGenerator() {
             >
               {m.hot && (
                 <span className="absolute -top-2 -right-1 rounded-full bg-gradient-to-r from-fuchsia-500 to-primary-500 px-2 py-0.5 text-[10px] font-bold text-white shadow-lg">
-                  ✨ Nosso diferencial
+                  Nosso diferencial
                 </span>
               )}
               <p className="text-xl mb-1">{m.icon}</p>
@@ -229,7 +229,7 @@ export default function VideoGenerator() {
         <div className="mb-6">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
             <label className="block text-sm font-semibold text-gray-200">
-              {mode === 'product' ? '📷 Foto do produto' : '🖼️ Imagem de origem'}
+              {mode === 'product' ? 'Foto do produto' : 'Imagem de origem'}
             </label>
             <span className="text-[11px] text-gray-500">
               {mode === 'talking' ? 'A IA usa essa foto pra criar a apresentadora segurando o produto' : 'Sem marca d’água · PNG/JPG' }
@@ -301,7 +301,7 @@ export default function VideoGenerator() {
           <div className="mt-7">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <label className={fieldLabel}>
-                {mode === 'product' ? '🎬 Estilo do anúncio em vídeo' : '🎬 Estilo do vídeo'}
+                {mode === 'product' ? 'Estilo do anúncio em vídeo' : 'Estilo do vídeo'}
               </label>
               <a
                 href={`https://www.pinterest.com/search/videos/?q=${encodeURIComponent(AD_STYLES.find((s) => s.key === preset)?.label.replace(' ', '') || 'anuncio de produto')}`}
@@ -338,7 +338,7 @@ export default function VideoGenerator() {
         {mode === 'product' && (
           <div className="grid sm:grid-cols-3 gap-4 mt-6">
             <div>
-              <label className={fieldLabel}>🏷️ Nome do produto</label>
+              <label className={fieldLabel}>Nome do produto</label>
               <input
                 type="text"
                 value={productName}
@@ -348,7 +348,7 @@ export default function VideoGenerator() {
               />
             </div>
             <div>
-              <label className={fieldLabel}>💸 Preço (opcional)</label>
+              <label className={fieldLabel}>Preço (opcional)</label>
               <input
                 type="text"
                 value={productPrice}
@@ -358,7 +358,7 @@ export default function VideoGenerator() {
               />
             </div>
             <div>
-              <label className={fieldLabel}>✨ Vantagens (opcional)</label>
+              <label className={fieldLabel}>Vantagens (opcional)</label>
               <input
                 type="text"
                 value={productDesc}
@@ -384,7 +384,7 @@ export default function VideoGenerator() {
                       : 'bg-white/5 text-gray-300 border-white/10 hover:border-primary-500/40'
                   }`}
                 >
-                  👩 Apresentadora
+                  Apresentadora
                 </button>
                 <button
                   onClick={() => setPresenter('homem')}
@@ -394,14 +394,14 @@ export default function VideoGenerator() {
                       : 'bg-white/5 text-gray-300 border-white/10 hover:border-primary-500/40'
                   }`}
                 >
-                  👨 Apresentador
+                  Apresentador
                 </button>
                 <span className="text-[11px] text-gray-500 self-center">Sempre uma pessoa bonita e carismática, estilo comercial de TV</span>
               </div>
             </div>
             <div className="grid sm:grid-cols-3 gap-4">
               <div>
-                <label className={fieldLabel}>🏷️ Nome do produto</label>
+                <label className={fieldLabel}>Nome do produto</label>
                 <input
                   type="text"
                   value={productName}
@@ -411,7 +411,7 @@ export default function VideoGenerator() {
                 />
               </div>
               <div>
-                <label className={fieldLabel}>💸 Preço (opcional)</label>
+                <label className={fieldLabel}>Preço (opcional)</label>
                 <input
                   type="text"
                   value={productPrice}
@@ -421,7 +421,7 @@ export default function VideoGenerator() {
                 />
               </div>
               <div>
-                <label className={fieldLabel}>✨ Vantagens (opcional)</label>
+                <label className={fieldLabel}>Vantagens (opcional)</label>
                 <input
                   type="text"
                   value={productDesc}
@@ -432,7 +432,7 @@ export default function VideoGenerator() {
               </div>
             </div>
             <div className="mt-4">
-              <label className={fieldLabel}>🎙️ Roteiro (opcional — a IA escreve se deixar em branco)</label>
+              <label className={fieldLabel}>Roteiro (opcional — a IA escreve se deixar em branco)</label>
               <textarea
                 value={script}
                 onChange={(e) => setScript(e.target.value)}
@@ -459,7 +459,7 @@ export default function VideoGenerator() {
         )}
         {mode === 'product' && (
           <div className="mt-5">
-            <label className={fieldLabel}>🎥 Movimento próprio (opcional, vale mais que o estilo)</label>
+            <label className={fieldLabel}>Movimento próprio (opcional, vale mais que o estilo)</label>
             <input
               type="text"
               value={prompt}
@@ -487,17 +487,17 @@ export default function VideoGenerator() {
             ) : (
               <>
                 {mode === 'talking'
-                  ? <span>🎤 Criar anúncio falado (1 crédito)</span>
+                  ? <span>Criar anúncio falado (1 crédito)</span>
                   : mode === 'product'
-                    ? <span>🎬 Criar anúncio (1 crédito)</span>
-                    : <span>🎞️ Gerar vídeo (1 crédito)</span>}
+                    ? <span>Criar anúncio (1 crédito)</span>
+                    : <span>Gerar vídeo (1 crédito)</span>}
               </>
             )}
           </button>
 
           {user && (
             <span className="text-sm text-gray-400">
-              🎬 <b className="text-gray-200">{credits}</b> créditos
+              <b className="text-gray-200">{credits}</b> créditos
             </span>
           )}
         </div>
@@ -505,7 +505,7 @@ export default function VideoGenerator() {
         {loading && liveStatus && (
           <p className="mt-4 text-sm text-primary-300 font-medium animate-pulse flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-primary-400 animate-ping" />
-            ✨ {liveStatus}
+            {liveStatus}
           </p>
         )}
       </div>
@@ -527,21 +527,21 @@ export default function VideoGenerator() {
         <div className="card card-glow">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-white">
-              {mode === 'product' ? '🎬 Anúncio do produto criado!' : mode === 'talking' ? '🎤 Anúncio falado criado!' : 'Vídeo gerado'}
+              {mode === 'product' ? 'Anúncio do produto criado!' : mode === 'talking' ? 'Anúncio falado criado!' : 'Vídeo gerado'}
             </h3>
             <button onClick={handleDownload} className="text-sm text-primary-300 hover:text-primary-200 font-medium flex items-center gap-1">
-              ⬇️ Baixar
+              Baixar
             </button>
           </div>
           <div className="rounded-xl overflow-hidden border border-white/10 bg-black/40">
             <video src={result.videoUrl} controls className="w-full h-auto max-h-[500px]" />
           </div>
           {result?.script && (
-            <p className="mt-3 text-sm text-gray-400">🎙️ Roteiro: <b className="text-gray-200">&quot;{result.script}&quot;</b></p>
+            <p className="mt-3 text-sm text-gray-400">Roteiro: <b className="text-gray-200">&quot;{result.script}&quot;</b></p>
           )}
-          {productName && <p className="mt-2 text-sm text-gray-400">📦 Anúncio para: <b className="text-gray-200">{productName}</b></p>}
+          {productName && <p className="mt-2 text-sm text-gray-400">Anúncio para: <b className="text-gray-200">{productName}</b></p>}
           {preset && mode === 'product' && !prompt.trim() && (
-            <p className="mt-1 text-sm text-gray-400">🎬 Estilo: <b className="text-gray-200">{AD_STYLES.find((s) => s.key === preset)?.label || preset}</b></p>
+            <p className="mt-1 text-sm text-gray-400">Estilo: <b className="text-gray-200">{AD_STYLES.find((s) => s.key === preset)?.label || preset}</b></p>
           )}
           {prompt && mode !== 'talking' && <p className="mt-1 text-sm text-gray-400 italic">&quot;{prompt}&quot;</p>}
         </div>

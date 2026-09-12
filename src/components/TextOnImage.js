@@ -150,7 +150,7 @@ export default function TextOnImage({ baseImageUrl, onExport }) {
   return (
     <div className="card">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-white">✏️ Texto em Português nítido</h3>
+        <h3 className="font-semibold text-white">Texto em Português nítido</h3>
         <span className="text-xs text-gray-400">Texto 100% correto, renderizado localmente</span>
       </div>
 
@@ -223,7 +223,7 @@ export default function TextOnImage({ baseImageUrl, onExport }) {
         disabled={!text.trim()}
         className="btn-primary mt-4 w-full disabled:opacity-50"
       >
-        ✅ Aplicar texto e baixar imagem final
+        Aplicar texto e baixar imagem final
       </button>
     </div>
   );

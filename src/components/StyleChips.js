@@ -1,14 +1,14 @@
 'use client';
 
 const STYLES = [
-  { icon: '🎨', label: 'Logotipo', prompt: 'Logotipo profissional minimalista para uma marca de tecnologia, com símbolo geométrico e tipografia elegante, fundo limpo, vetor' },
-  { icon: '📸', label: 'Foto de perfil', prompt: 'Retrato profissional vibrante para foto de perfil, iluminação de estúdio, fundo desfocado colorido, fotorrealismo em 4K' },
-  { icon: '🖼️', label: 'Pôster', prompt: 'Pôster criativo chamativo para celebridade, cores vibrantes, tipografia ousada, estilo moderno e elegante' },
-  { icon: '🏔️', label: 'Paisagem', prompt: 'Paisagem cinematográfica deslumbrante de montanhas nevadas ao pôr do sol, nuvens dramáticas, ultra detalhada, 4K' },
-  { icon: '🚀', label: 'Fantasia', prompt: 'Ilustração de fantasia épica de um castelo flutuante nas nuvens ao amanhecer, cores mágicas, arte digital de alta qualidade' },
-  { icon: '🐱', label: 'Avatar fofo', prompt: 'Animal fofo estilo kawaii, olhos grandes, cores suaves, ilustração digital adorável, fundo pastel' },
-  { icon: '🏠', label: 'Arquitetura', prompt: 'Casa moderna minimalista com arquitetura contemporânea, piscina, ao entardecer, iluminação aconchegante, fotorrealismo' },
-  { icon: '🍔', label: 'Produto', prompt: 'Hambúrguer gourmet apetitoso sobre fundo escuro dramático, fotografia de comida profissional, iluminação de estúdio, 4K' },
+  { icon: '', label: 'Logotipo', prompt: 'Logotipo profissional minimalista para uma marca de tecnologia, com símbolo geométrico e tipografia elegante, fundo limpo, vetor' },
+  { icon: '', label: 'Foto de perfil', prompt: 'Retrato profissional vibrante para foto de perfil, iluminação de estúdio, fundo desfocado colorido, fotorrealismo em 4K' },
+  { icon: '', label: 'Pôster', prompt: 'Pôster criativo chamativo para celebridade, cores vibrantes, tipografia ousada, estilo moderno e elegante' },
+  { icon: '', label: 'Paisagem', prompt: 'Paisagem cinematográfica deslumbrante de montanhas nevadas ao pôr do sol, nuvens dramáticas, ultra detalhada, 4K' },
+  { icon: '', label: 'Fantasia', prompt: 'Ilustração de fantasia épica de um castelo flutuante nas nuvens ao amanhecer, cores mágicas, arte digital de alta qualidade' },
+  { icon: '', label: 'Avatar fofo', prompt: 'Animal fofo estilo kawaii, olhos grandes, cores suaves, ilustração digital adorável, fundo pastel' },
+  { icon: '', label: 'Arquitetura', prompt: 'Casa moderna minimalista com arquitetura contemporânea, piscina, ao entardecer, iluminação aconchegante, fotorrealismo' },
+  { icon: '', label: 'Produto', prompt: 'Hambúrguer gourmet apetitoso sobre fundo escuro dramático, fotografia de comida profissional, iluminação de estúdio, 4K' },
 ];
 
 export default function StyleChips() {

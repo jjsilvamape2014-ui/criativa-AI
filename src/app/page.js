@@ -160,7 +160,7 @@ export default function Home() {
               className="w-full aspect-[4/5] object-cover"
             />
             <span className="absolute top-3 left-3 rounded-full bg-black/60 backdrop-blur px-3 py-1.5 text-[11px] font-semibold text-white">
-              ▶ Exemplo do Anúncio Falado
+              Exemplo do Anúncio Falado
             </span>
             <span className="absolute bottom-3 left-3 rounded-full bg-brand-accent px-3 py-1.5 text-[11px] font-bold text-brand-bg">
               A voz fala o roteiro em português
@@ -170,21 +170,21 @@ export default function Home() {
           {/* Lado a lado do que a ferramenta faz */}
           <div className="flex flex-col gap-4">
             <div className="rounded-[14px] border border-brand-border bg-brand-surface p-5 flex gap-4 items-start">
-              <span className="text-2xl">📸</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="text-[15px] font-semibold text-brand-text">Você envia a foto do produto</p>
                 <p className="mt-1 text-[13px] text-brand-tert leading-relaxed">Tênis, fritadeira, moda, eletrônico — o que você vende, a IA mostra na mão da apresentadora.</p>
               </div>
             </div>
             <div className="rounded-[14px] border border-brand-border bg-brand-surface p-5 flex gap-4 items-start">
-              <span className="text-2xl">🎙️</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="text-[15px] font-semibold text-brand-text">A IA escreve o roteiro e gera a voz</p>
                 <p className="mt-1 text-[13px] text-brand-tert leading-relaxed">Nome, preço e vantagens do anúncio viram uma narração animada em português. Você também pode escrever do seu jeito.</p>
               </div>
             </div>
             <div className="rounded-[14px] border border-brand-border bg-brand-surface p-5 flex gap-4 items-start">
-              <span className="text-2xl">🎬</span>
+              <span className="text-2xl"></span>
               <div>
                 <p className="text-[15px] font-semibold text-brand-text">Pronto pra postar no Shopee e TikTok</p>
                 <p className="mt-1 text-[13px] text-brand-tert leading-relaxed">Vídeo vertical, com a apresentadora olhando pra câmera e falando o roteiro — igual ao dos grandes afiliados.</p>

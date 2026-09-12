@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Instrument_Sans } from 'next/font/google';
+import { Bricolage_Grotesque, Instrument_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
 const bricolage = Bricolage_Grotesque({
@@ -15,6 +15,14 @@ const instrument = Instrument_Sans({
   display: 'swap',
   adjustFontFallback: false,
   variable: '--font-instrument',
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  adjustFontFallback: false,
+  variable: '--font-mono',
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://ia.linhafacil2026.com.br';
@@ -57,7 +65,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className="dark">
-      <body className={`${bricolage.variable} ${instrument.variable} antialiased min-h-screen font-sans`}>
+      <body className={`${bricolage.variable} ${instrument.variable} ${jetbrains.variable} antialiased min-h-screen font-sans`}>
         {children}
         <script
           type="application/ld+json"

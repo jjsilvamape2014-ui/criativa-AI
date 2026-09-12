@@ -93,7 +93,7 @@ export default function LandingGenerator({ initialPrompt = '', scrollOnSet = fal
         className="mb-4 flex items-center justify-between gap-3 rounded-[16px] border-2 border-brand-accent/40 bg-gradient-to-r from-brand-accent/20 to-transparent px-4 py-3 transition-all hover:border-brand-accent"
       >
         <div>
-          <p className="text-[14px] font-bold text-brand-text">🗳️ Eleições 2026 · Card de candidato</p>
+          <p className="text-[14px] font-bold text-brand-text">Eleições 2026 · Card de candidato</p>
           <p className="text-[12px] text-brand-dim mt-0.5">Foto, nome, número e slogan — o santinho pronto no instante.</p>
         </div>
         <span className="shrink-0 rounded-lg bg-brand-accent px-3 py-2 text-[12px] font-bold text-brand-bg">Criar agora →</span>
@@ -110,7 +110,7 @@ export default function LandingGenerator({ initialPrompt = '', scrollOnSet = fal
         >
           <div className="flex items-start justify-between">
             <div>
-              <p className={`text-2xl mb-1 ${mode === 'image' ? '' : 'opacity-80'}`}>🖼️</p>
+              <p className={`text-2xl mb-1 ${mode === 'image' ? '' : 'opacity-80'}`}></p>
               <p className={`text-[15px] font-bold ${mode === 'image' ? 'text-brand-accent' : 'text-brand-text'}`}>Criar imagem</p>
               <p className="text-[12px] text-brand-dim mt-0.5">Pôster, logo, post, arte</p>
             </div>
@@ -135,11 +135,11 @@ export default function LandingGenerator({ initialPrompt = '', scrollOnSet = fal
           <span className={`absolute -top-2 -right-2 rounded-full px-2.5 py-1 text-[10px] font-bold shadow-lg ${
             mode === 'video' ? 'bg-brand-accent text-brand-bg' : 'bg-brand-red text-brand-text'
           }`}>
-            ✨ Nenhuma IA faz igual
+            Nenhuma IA faz igual
           </span>
           <div className="flex items-start justify-between">
             <div>
-              <p className={`text-2xl mb-1 ${mode === 'video' ? '' : 'opacity-80'}`}>🎬</p>
+              <p className={`text-2xl mb-1 ${mode === 'video' ? '' : 'opacity-80'}`}></p>
               <p className={`text-[15px] font-bold ${mode === 'video' ? 'text-brand-accent' : 'text-brand-text'}`}>Vídeo / Anúncio falado</p>
               <p className="text-[12px] text-brand-dim mt-0.5">Apresentadora fala do seu produto</p>
             </div>
@@ -276,7 +276,7 @@ export default function LandingGenerator({ initialPrompt = '', scrollOnSet = fal
               }}
               className="block text-center text-sm py-2.5 rounded-lg border border-brand-border text-brand-accent hover:text-brand-accentHover transition-colors"
             >
-              🎬 Criar anúncio em vídeo
+              Criar anúncio em vídeo
             </button>
             <button
               onClick={() => { setResult(null); inputRef.current?.focus(); }}
