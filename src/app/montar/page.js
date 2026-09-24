@@ -17,6 +17,7 @@ export default function MontarPage() {
   const [msg, setMsg] = useState('');
   const [erro, setErro] = useState('');
   const [voz, setVoz] = useState('pf_dora');
+  const [orientacao, setOrientacao] = useState('horizontal'); // horizontal | vertical
 
   const pegaVideo = (e) => {
     const f = e.target.files && e.target.files[0];
@@ -53,6 +54,7 @@ export default function MontarPage() {
     const fd2 = new FormData();
     fd2.append('video', video);
     fd2.append('srt', legenda);
+    fd2.append('orientacao', orientacao);
     if (logoImg) fd2.append('logo', logoImg);
     fd2.append('voz', voz);
     fd2.append('abertura', JSON.stringify({
@@ -134,6 +136,26 @@ export default function MontarPage() {
               {logoImg ? 'Logo: ' + logoImg.name : 'Livro/aluno do podcast (opcional)'}
             </button>
             <input ref={logoRef} type="file" accept="image/*" className="hidden" onChange={pegaLogo} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-brand-sub">Formato da saída</label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setOrientacao('vertical')}
+                className={`rounded-xl border px-3 py-2.5 text-sm transition-colors ${orientacao === 'vertical' ? 'border-primary-500 bg-primary-500/10 text-brand-text' : 'border-brand-borderStrong bg-white/[0.03] text-brand-sub hover:border-primary-500/50'}`}
+              >
+                📱 Vertical (celular/Reels)
+              </button>
+              <button
+                type="button"
+                onClick={() => setOrientacao('horizontal')}
+                className={`rounded-xl border px-3 py-2.5 text-sm transition-colors ${orientacao === 'horizontal' ? 'border-primary-500 bg-primary-500/10 text-brand-text' : 'border-brand-borderStrong bg-white/[0.03] text-brand-sub hover:border-primary-500/50'}`}
+              >
+                📺 Horizontal (TV/projetor)
+              </button>
+            </div>
           </div>
 
           <button
