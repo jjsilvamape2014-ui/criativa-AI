@@ -14,7 +14,29 @@ export default function CerebroEditor() {
   const [credits, setCredits] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [portraitMode, setPortraitMode] = useState(false);
+  const [jobStep, setJobStep] = useState(null); // progresso do anúncio em vídeo
   const endRef = useRef(null);
+
+  // Acompanha o anúncio em vídeo (1–4 min) sem segurar a requisição.
+  const pollJob = async (jobId, baseMessages) => {
+    const started = Date.now();
+    while (Date.now() - started < 10 * 60 * 1000) {
+      await new Promise((r) => setTimeout(r, 4000));
+      let job;
+      try { job = await api.cerebroJob(jobId); } catch (e) { continue; }
+      if (job.status === 'running') { setJobStep(job.step || 'Produzindo o vídeo...'); continue; }
+      setJobStep(null);
+      if (job.status === 'done') {
+        setMessages([...baseMessages, { role: 'assistant', message: job.reply, videoUrl: job.videoUrl }]);
+        if (job.credits) setCredits(job.credits);
+      } else {
+        setError({ type: 'GENERIC', message: job.error || 'Nao consegui montar o video. Tente novamente.' });
+      }
+      return;
+    }
+    setJobStep(null);
+    setError({ type: 'GENERIC', message: 'O video esta demorando mais que o normal. Tente novamente em instantes.' });
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -108,16 +130,19 @@ export default function CerebroEditor() {
       setSessionId(data.sessionId);
       setPortraitMode(false);
       if (typeof window !== 'undefined') sessionStorage.setItem('criai_cerebro_session', data.sessionId);
-      const isVideo = !!data.videoUrl;
-      setMessages([...newMessages, { role: 'assistant', message: data.reply, imageUrl: data.imageUrl, videoUrl: data.videoUrl || (isVideo ? data.videoUrl : null) }]);
-      if (isVideo) {
-        setBaseImage(data.videoUrl);
-        setRefImages((prev) => (prev.length ? [data.videoUrl, ...prev.slice(1)] : [data.videoUrl]));
-      } else if (data.imageUrl) {
+      const withReply = [...newMessages, { role: 'assistant', message: data.reply, imageUrl: data.imageUrl, videoUrl: data.videoUrl || null }];
+      setMessages(withReply);
+      if (data.jobId) {
+        // anúncio em vídeo rodando em segundo plano → acompanha o progresso
+        setJobStep('Começando...');
+        setInput('');
+        await pollJob(data.jobId, withReply);
+      } else if (data.imageUrl && !data.videoUrl) {
+        // vídeo NÃO vira imagem de referência (quebrava as edições seguintes)
         setBaseImage(data.imageUrl);
         setRefImages((prev) => (prev.length ? [data.imageUrl, ...prev.slice(1)] : [data.imageUrl]));
       }
-      setCredits(data.credits || null);
+      if (!data.jobId) setCredits(data.credits || null);
     } catch (err) {
       if (err.data?.code === 'NO_CREDITS') {
         setError({ type: 'NO_CREDITS', message: 'Seus creditos acabaram! Assine o plano por R$ 39,99/mes para continuar criando.' });
@@ -151,7 +176,7 @@ export default function CerebroEditor() {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
 
-  const examples = ['Trocar a cor da caneca para azul', 'Deixar o fundo branco', 'Colocar minha logo na imagem', 'Remover os nomes/textos da embalagem', 'Transformar esta foto em vídeo', 'Colocar um chapéu na pessoa'];
+  const examples = ['Trocar a cor da caneca para azul', 'Deixar o fundo branco', 'Colocar minha logo na imagem', 'Remover os nomes/textos da embalagem', 'Transformar esta foto em vídeo', 'Vídeo de anúncio com voz da minha loja', 'Colocar um chapéu na pessoa'];
 
   return (
     <div id="cerebro" className="card mb-8">
@@ -251,7 +276,7 @@ export default function CerebroEditor() {
           <div className="flex justify-start">
             <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-2xl px-4 py-3">
               <svg className="animate-spin h-4 w-4 text-primary-400" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-              <span className="text-sm text-gray-300">Editando a imagem...</span>
+              <span className="text-sm text-gray-300">{jobStep || 'Editando a imagem...'}</span>
             </div>
           </div>
         )}

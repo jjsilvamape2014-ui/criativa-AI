@@ -233,6 +233,10 @@ class ApiClient {
     });
   }
 
+  async cerebroJob(jobId) {
+    return this.request(`/cerebro/job/${jobId}`);
+  }
+
   async cerebroMemory(sessionId) {
     return this.request(`/cerebro/memoria/${sessionId}`);
   }
