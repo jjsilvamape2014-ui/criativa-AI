@@ -161,6 +161,11 @@ class ApiClient {
     });
   }
 
+  // Custo antes de gerar: { cost, duration, have, premium, text }
+  async getVideoEstimate(duration = 5) {
+    return this.request(`/generate/video/estimate?duration=${encodeURIComponent(duration)}`);
+  }
+
   async getHistory() {
     return this.request('/generate/history');
   }
