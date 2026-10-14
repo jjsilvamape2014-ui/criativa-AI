@@ -21,7 +21,18 @@ const MODES = [
   { key: 'product', icon: '', label: 'Anúncio de produto', tip: 'Vídeo vendendo no marketplace' },
   { key: 'talking', icon: '', label: 'Anúncio falado', tip: 'Apresentadora fala do produto', hot: true },
   { key: 'animate', icon: '', label: 'Animar imagem', tip: 'Move a sua imagem' },
+  { key: 'text', icon: '', label: 'Vídeo do zero', tip: 'Descreva a cena, sem precisar de foto' },
 ];
+
+// Duração (o modelo aceita de 3 a 15 s) e formato (só no vídeo do zero: com foto, o
+// formato vem da própria foto). O custo é 1 crédito a cada 5 segundos.
+const DURATIONS = [5, 10, 15];
+const ASPECTS = [
+  { key: '9:16', label: 'Vertical 9:16', tip: 'Reels, Status, TikTok' },
+  { key: '1:1', label: 'Quadrado 1:1', tip: 'Feed' },
+  { key: '16:9', label: 'Horizontal 16:9', tip: 'YouTube' },
+];
+const creditsFor = (seconds) => Math.ceil(seconds / 5);
 
 export default function VideoGenerator() {
   const [mode, setMode] = useState('product');
@@ -33,6 +44,9 @@ export default function VideoGenerator() {
   const [script, setScript] = useState('');
   const [presenter, setPresenter] = useState('mulher');
   const [liveStatus, setLiveStatus] = useState('');
+  const [duration, setDuration] = useState(5);
+  const [aspectRatio, setAspectRatio] = useState('9:16');
+  const [estimate, setEstimate] = useState(null);
 
   const [imageUrl, setImageUrl] = useState('');
   const [imageData, setImageData] = useState('');
@@ -71,6 +85,14 @@ export default function VideoGenerator() {
     }
   }, []);
 
+  // Custo ANTES de gerar (no PREMIUM mostra "vídeo X de Y do mês")
+  useEffect(() => {
+    if (mode === 'talking' || typeof window === 'undefined' || !localStorage.getItem('token')) { setEstimate(null); return; }
+    let alive = true;
+    api.getVideoEstimate(duration).then((e) => { if (alive) setEstimate(e); }).catch(() => { if (alive) setEstimate(null); });
+    return () => { alive = false; };
+  }, [duration, mode, user]);
+
   const recentImages = (history || []).filter(g => g.type === 'IMAGE' && g.imageUrl);
 
   const handleFileUpload = (file) => {
@@ -97,7 +119,12 @@ export default function VideoGenerator() {
       setShowLoginModal(true);
       return;
     }
-    if (!imageData && !imageUrl.trim()) {
+    if (mode === 'text') {
+      if (prompt.trim().length < 8) {
+        setError({ type: 'GENERIC', message: 'Descreva a cena do vídeo (ex.: "um cachorro correndo na praia ao pôr do sol, câmera lenta").' });
+        return;
+      }
+    } else if (!imageData && !imageUrl.trim()) {
       setError({ type: 'GENERIC', message: 'Envie uma foto do seu produto ou escolha uma imagem.' });
       return;
     }
@@ -138,7 +165,23 @@ export default function VideoGenerator() {
       return;
     }
 
-    const options = { mode, preset };
+    const options = { mode, preset, duration };
+    if (mode === 'text') {
+      try {
+        const data = await api.generateVideo('', { mode: 'custom', prompt: prompt.trim(), duration, aspectRatio });
+        setResult(data);
+        setUser(prev => prev ? { ...prev, ...data.credits } : null);
+      } catch (err) {
+        if (err.data?.code === 'NO_CREDITS') {
+          setError({ type: 'NO_CREDITS', message: err.data?.error || 'Seus créditos de vídeo acabaram! Assine o plano por R$ 39,99/mês.' });
+        } else {
+          setError({ type: 'GENERIC', message: err.message || 'Erro ao gerar vídeo. Tente novamente.' });
+        }
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     if (imageData) options.imageData = imageData;
     if (mode === 'product') {
       options.prompt = prompt;
@@ -155,7 +198,7 @@ export default function VideoGenerator() {
       setUser(prev => prev ? { ...prev, ...data.credits } : null);
     } catch (err) {
       if (err.data?.code === 'NO_CREDITS') {
-        setError({ type: 'NO_CREDITS', message: 'Seus créditos de vídeo acabaram! Assine o plano por R$ 39,99/mês.' });
+        setError({ type: 'NO_CREDITS', message: err.data?.error || 'Seus créditos de vídeo acabaram! Assine o plano por R$ 39,99/mês.' });
       } else {
         setError({ type: 'GENERIC', message: err.message || 'Erro ao gerar vídeo. Tente novamente.' });
       }
@@ -203,7 +246,7 @@ export default function VideoGenerator() {
         <p className="text-sm font-bold text-white mb-3">Qual tipo de vídeo você quer?</p>
 
         {/* Tipos de vídeo */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mb-8">
           {MODES.map((m) => (
             <button
               key={m.key}
@@ -226,6 +269,40 @@ export default function VideoGenerator() {
           ))}
         </div>
 
+        {mode === 'text' && (
+          <div className="mb-2">
+            <label className={fieldLabel}>Descreva o vídeo</label>
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              rows={4}
+              placeholder='Ex: "Um café sendo servido numa xícara branca, fumaça subindo, luz da manhã pela janela, câmera lenta se aproximando"'
+              className="input resize-none"
+            />
+            <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+              Quanto mais detalhes (o que aparece, o que acontece, o movimento da câmera, a luz), mais o vídeo sai como você imaginou.
+            </p>
+            <label className={`${fieldLabel} mt-5`}>Formato</label>
+            <div className="flex flex-wrap gap-2">
+              {ASPECTS.map((a) => (
+                <button
+                  key={a.key}
+                  onClick={() => setAspectRatio(a.key)}
+                  title={a.tip}
+                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition-all border ${
+                    aspectRatio === a.key
+                      ? 'bg-primary-600 text-white border-primary-600 shadow'
+                      : 'bg-white/5 text-gray-300 border-white/10 hover:border-primary-500/40'
+                  }`}
+                >
+                  {a.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {mode !== 'text' && (<>
         <div className="mb-6">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
             <label className="block text-sm font-semibold text-gray-200">
@@ -296,8 +373,10 @@ export default function VideoGenerator() {
           </div>
         </div>
 
+        </>)}
+
         {/* Estilos de anúncio */}
-        {mode !== 'talking' && (
+        {mode !== 'talking' && mode !== 'text' && (
           <div className="mt-7">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <label className={fieldLabel}>
@@ -470,6 +549,27 @@ export default function VideoGenerator() {
           </div>
         )}
 
+        {mode !== 'talking' && (
+          <div className="mt-6">
+            <label className={fieldLabel}>Duração</label>
+            <div className="flex flex-wrap gap-2">
+              {DURATIONS.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setDuration(d)}
+                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition-all border ${
+                    duration === d
+                      ? 'bg-primary-600 text-white border-primary-600 shadow'
+                      : 'bg-white/5 text-gray-300 border-white/10 hover:border-primary-500/40'
+                  }`}
+                >
+                  {d} segundos · {creditsFor(d)} crédito{creditsFor(d) > 1 ? 's' : ''}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-wrap items-center justify-between gap-3 mt-8 pt-6 border-t border-white/10">
           <button
             onClick={handleGenerate}
@@ -488,16 +588,20 @@ export default function VideoGenerator() {
               <>
                 {mode === 'talking'
                   ? <span>Criar anúncio falado (1 crédito)</span>
-                  : mode === 'product'
-                    ? <span>Criar anúncio (1 crédito)</span>
-                    : <span>Gerar vídeo (1 crédito)</span>}
+                  : (() => {
+                      const n = estimate && estimate.cost === 0 ? 0 : creditsFor(duration);
+                      const tag = n === 0 ? 'incluso no plano' : `${n} crédito${n > 1 ? 's' : ''}`;
+                      return <span>{mode === 'product' ? 'Criar anúncio' : 'Gerar vídeo'} ({tag})</span>;
+                    })()}
               </>
             )}
           </button>
 
           {user && (
             <span className="text-sm text-gray-400">
-              <b className="text-gray-200">{credits}</b> créditos
+              {estimate?.text
+                ? estimate.text
+                : <><b className="text-gray-200">{credits}</b> créditos</>}
             </span>
           )}
         </div>
@@ -527,7 +631,7 @@ export default function VideoGenerator() {
         <div className="card card-glow">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-white">
-              {mode === 'product' ? 'Anúncio do produto criado!' : mode === 'talking' ? 'Anúncio falado criado!' : 'Vídeo gerado'}
+              {mode === 'product' ? 'Anúncio do produto criado!' : mode === 'talking' ? 'Anúncio falado criado!' : `Vídeo gerado${result.duration ? ` (${result.duration} s)` : ''}`}
             </h3>
             <button onClick={handleDownload} className="text-sm text-primary-300 hover:text-primary-200 font-medium flex items-center gap-1">
               Baixar
