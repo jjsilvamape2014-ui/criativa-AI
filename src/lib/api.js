@@ -166,6 +166,15 @@ class ApiClient {
     return this.request(`/generate/video/estimate?duration=${encodeURIComponent(duration)}`);
   }
 
+  // Admin (só para o dono): resumo de cadastros/uso/compras e as últimas conversas
+  async getAdminResumo(days = 30) {
+    return this.request(`/admin/resumo?days=${encodeURIComponent(days)}`);
+  }
+
+  async getAdminConversas(hours = 72, limit = 40) {
+    return this.request(`/admin/conversas?hours=${encodeURIComponent(hours)}&limit=${encodeURIComponent(limit)}`);
+  }
+
   async getHistory() {
     return this.request('/generate/history');
   }
