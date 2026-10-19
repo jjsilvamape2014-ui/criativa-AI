@@ -221,6 +221,13 @@ class ApiClient {
     return this.request('/credits/packages');
   }
 
+  // Planos e pacotes vindos do servidor (preço do PREMIUM, limites e catálogos).
+  // A tela de planos NÃO deve ter preço/id escritos à mão: o que ela mostra é o
+  // que o servidor aplica no checkout.
+  async getPlans() {
+    return this.request('/credits/plans');
+  }
+
   async getBalance() {
     return this.request('/credits/balance');
   }
