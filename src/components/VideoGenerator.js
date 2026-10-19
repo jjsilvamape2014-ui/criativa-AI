@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { api } from '@/lib/api';
+import MotionPresetPicker from './MotionPresetPicker';
 
 // Estilos de anúncio em vídeo — o "Afiliado Shopee" é o estilo de apresentação de
 // produto usado pelos afiliados pra vender no marketplace.
@@ -46,6 +47,7 @@ export default function VideoGenerator() {
   const [liveStatus, setLiveStatus] = useState('');
   const [duration, setDuration] = useState(5);
   const [aspectRatio, setAspectRatio] = useState('9:16');
+  const [motionPresetId, setMotionPresetId] = useState('');
   const [estimate, setEstimate] = useState(null);
 
   const [imageUrl, setImageUrl] = useState('');
@@ -166,9 +168,13 @@ export default function VideoGenerator() {
     }
 
     const options = { mode, preset, duration };
+    // Movimento de câmera escolhido vai junto no POST do vídeo (campo opcional)
+    if (motionPresetId) options.motionPresetId = motionPresetId;
     if (mode === 'text') {
       try {
-        const data = await api.generateVideo('', { mode: 'custom', prompt: prompt.trim(), duration, aspectRatio });
+        const payload = { mode: 'custom', prompt: prompt.trim(), duration, aspectRatio };
+        if (motionPresetId) payload.motionPresetId = motionPresetId;
+        const data = await api.generateVideo('', payload);
         setResult(data);
         setUser(prev => prev ? { ...prev, ...data.credits } : null);
       } catch (err) {
@@ -547,6 +553,11 @@ export default function VideoGenerator() {
               className="input"
             />
           </div>
+        )}
+
+        {/* Movimento de câmera (65 presets agrupados) — só nos modos com pipeline de vídeo */}
+        {mode !== 'talking' && (
+          <MotionPresetPicker value={motionPresetId} onChange={setMotionPresetId} />
         )}
 
         {mode !== 'talking' && (
