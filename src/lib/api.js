@@ -166,6 +166,11 @@ class ApiClient {
     return this.request(`/generate/video/estimate?duration=${encodeURIComponent(duration)}`);
   }
 
+  // Presets de movimento de câmera: { success, groups: { [grupo]: [preset] }, count }
+  async getMotionPresets() {
+    return this.request('/motion-presets');
+  }
+
   // Admin (só para o dono): resumo de cadastros/uso/compras e as últimas conversas
   async getAdminResumo(days = 30) {
     return this.request(`/admin/resumo?days=${encodeURIComponent(days)}`);
